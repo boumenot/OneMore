@@ -17,13 +17,11 @@
 
     internal class ExtractTextCommand : Command
     {
-        //private OneNote one;
-        //private Page page;
+        private Page page;
         private XNamespace ns;
 
         public ExtractTextCommand()
         {
-            this.ns = XNamespace.Xmlns;
         }
 
         public override async Task Execute(params object[] args)
@@ -34,17 +32,18 @@
                 return;
             }
 
-            using var one = new OneNote(out var page, out var ns);
+            using var one = new OneNote(out this.page, out this.ns, OneNote.PageDetail.All);
             var elements = page.Root.Descendants(ns + "Image")?
-                .Where(e => e.Attribute("selected")?.Value == "all");
+                .Where(e => e.Attribute("selected")?.Value == "all")
+                .ToArray();
 
-            if ((elements == null) || !elements.Any())
+            if (!elements.Any())
             {
                 // starting at Outline should exclude all background images
-                elements = page.Root.Elements(ns + "Outline").Descendants(ns + "Image");
+                elements = page.Root.Elements(ns + "Outline").Descendants(ns + "Image").ToArray();
             }
 
-            if (elements != null && elements.Any())
+            if (elements.Any())
             {
                 await OcrImages(elements);
             }
