@@ -887,5 +887,10 @@ namespace River.OneMoreAddIn
 		[Command("ribWordCountButton_Label", Keys.None, "ribPageMenu")]
 		public async Task WordCountCmd(IRibbonControl control)
 			=> await factory.Run<WordCountCommand>();
+
+
+		[Command("ribExtractTextButton_Label", Keys.None)]
+		public async Task ExtractTextCmd(IRibbonControl control)
+			=> await factory.Run<ExtractTextCommand>();
 	}
 }

@@ -6727,6 +6727,15 @@ namespace River.OneMoreAddIn.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Extract Text.
+        /// </summary>
+        internal static string ribExtractTextButton_Label {
+            get {
+                return ResourceManager.GetString("ribExtractTextButton_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Extras.
         /// </summary>
         internal static string ribExtrasMenu_Label {

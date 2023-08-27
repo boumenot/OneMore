@@ -154,7 +154,7 @@
     <Compile Include="Commands\File\Markdown\OneMoreDigExtensions.cs" />
     <Compile Include="Commands\File\Markdown\OneMoreDigRenderer.cs" />
     <Compile Include="Commands\Images\CompressImagesCommand.cs" />
-    <Compile Include="Commands\Images\OcrImageCommand.cs" />
+    <Compile Include="Commands\Images\ExtractTextCommand.cs" />
     <Compile Include="Commands\Images\PlantUmlCommand.cs" />
     <Compile Include="Commands\Images\OpenImageWithCommand.cs" />
     <Compile Include="Commands\Images\PlantUmlHelper.cs" />

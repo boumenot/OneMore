@@ -222,8 +222,10 @@ Begin
         . $devenv .\OneMoreSetup.vdproj /build "Debug|x$bitness" /project Setup /projectconfig Debug
 
         # move msi to Downloads for safe-keeping and to allow next Platform build
-        Move-Item .\Debug\*.msi $home\Downloads -Force
-        Write-Host "... x$bitness MSI copied to $home\Downloads\" -ForegroundColor DarkYellow
+        # Move-Item .\Debug\*.msi $home\Downloads -Force
+        # Write-Host "... x$bitness MSI copied to $home\Downloads\" -ForegroundColor DarkYellow
+        Move-Item .\Debug\*.msi c:\dev\OneMore -Force
+        Write-Host "... x$bitness MSI copied to c:\dev\OneMore" -ForegroundColor DarkYellow
     }
 }
 Process
