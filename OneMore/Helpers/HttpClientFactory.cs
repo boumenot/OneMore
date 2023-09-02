@@ -7,14 +7,20 @@ namespace River.OneMoreAddIn
 	using System.Net;
 	using System.Net.Http;
 	using System.Net.NetworkInformation;
+    using System.Runtime.InteropServices;
 
 
-	/// <summary>
-	/// Singleton to return an HttpClient
-	/// </summary>
+    /// <summary>
+    /// Singleton to return an HttpClient
+    /// </summary>
 	internal static class HttpClientFactory
 	{
 		private static HttpClient client;
+
+        static HttpClientFactory()
+        {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+        }
 
 
 		/// <summary>
@@ -32,27 +38,28 @@ namespace River.OneMoreAddIn
 		/// </code>
 		/// </remarks>
 		public static HttpClient Create()
-		{
-			if (client == null)
-			{
-				ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+        {
+            return client ??= CreateNew();
+        }
 
-				var handler = new HttpClientHandler()
-				{
-					AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
-				};
 
-				client = new HttpClient(handler);
+        public static HttpClient CreateNew()
+        {
+            var handler = new HttpClientHandler()
+            {
+                AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
+            };
 
-				// required headers otherwise some sites may not respond
-				client.DefaultRequestHeaders.Add("user-agent", "OneMore");
-				client.DefaultRequestHeaders.Add("accept", "text/html,application/xhtml+xml,application/xml,application/json");
-				client.DefaultRequestHeaders.Add("accept-encoding", "gzip, deflate");
-				client.DefaultRequestHeaders.Add("accept-language", "en-US;q=0.9");
-			}
+            var c = new HttpClient(handler);
 
-			return client;
-		}
+            // required headers otherwise some sites may not respond
+            c.DefaultRequestHeaders.Add("user-agent", "OneMore");
+            c.DefaultRequestHeaders.Add("accept", "text/html,application/xhtml+xml,application/xml,application/json");
+            c.DefaultRequestHeaders.Add("accept-encoding", "gzip, deflate");
+            c.DefaultRequestHeaders.Add("accept-language", "en-US;q=0.9");
+
+            return c;
+        }
 
 
 		/// <summary>
