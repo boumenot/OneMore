@@ -1,4 +1,33 @@
-﻿# ![logo](OneMore/Properties/Images/Logo48.png "logo") OneMore - a OneNote Add-in
+﻿# FORK
+
+This is a fork of [stevencohn/OneMore](https://github.com/stevencohn/OneMore).  My changes add support for extracting text using [Azure AI Vision](https://azure.microsoft.com/en-us/products/ai-services/ai-vision), which has given **me** better results.  OneNote natively supports OCR, this is another way to extract text.
+
+My change is not user friendly.  If you want to try it you will need:
+
+1. Build the code.
+1. Define and set the environment variable AZURE\_COGNITIVE\_SUBSCRIPTION\_KEY with your Azure AI key.
+1. Define and set the environment variable AZURE\_COGNITIVE\_SUBSCRIPTION\_ENDPOINT with your Azure AI endpoint, e.g. https://me.cognitiveservices.azure.com/
+
+Execute the `Extract Text` command using the command palette.  Selected images will be sent to Azure AI for processing, and the resulting **text** output will be placed on the clipboard.  Press Ctrl+V to paste the text.  If one or more images are not selected, all images on the page will be processed.
+
+Up to ten images are processed at a time, and completion is polled every 1.5 seconds.  See the [pricing page](https://azure.microsoft.com/en-us/pricing/details/cognitive-services/computer-vision/) for details.
+
+The text extracted from images is returned in document order even though images are processed in paralle.
+
+## FORK TODO
+
+In no particular order, and with no expectation of doing.
+
+1. Retry failed attempts.
+1. Progress bar experience is useless, maybe it could be made more informative.
+1. Create UI to make it easier to analyze an image in pieces rather than the whole.  Images with multiple columns are extracted well, but the result interleaves columns.  The work around is to split the image up yourself, and then extract the text.
+1. Submit a PR for inclusion in the main repository.
+
+-------------
+-------------
+-------------
+
+# ![logo](OneMore/Properties/Images/Logo48.png "logo") OneMore - a OneNote Add-in
 
 OneMore is an add-in for OneNote with simple and powerful features that make OneNote a better OneNote.
 
