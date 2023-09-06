@@ -226,7 +226,7 @@
   </hint>
   <hint name="ribRemoveSectionNumbersButton_Screentip">
     <source>
-      Remove numbers from all sectionsin this notebook
+      Remove numbers from all sections in this notebook
     </source>
     <preferred>
       删除此笔记本中所有分区的编号
