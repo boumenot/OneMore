@@ -23,7 +23,7 @@ namespace River.OneMoreAddIn.Settings
 		private const string ColorizeResID = "ribColorizeMenu_Label";
 
 		#region Private classes
-		private sealed class CtxMenu
+		internal sealed class CtxMenu
 		{
 			public string Name { get; set; }
 			public string ResID { get; set; }
@@ -32,7 +32,7 @@ namespace River.OneMoreAddIn.Settings
 		}
 
 
-		private sealed class CtxMenuItem
+		internal sealed class CtxMenuItem
 		{
 			public string Name { get; set; }
 			public string ResID { get; set; }
@@ -220,7 +220,7 @@ namespace River.OneMoreAddIn.Settings
 		}
 
 
-		IEnumerable<CtxMenu> CollectCommandMenus()
+		internal IEnumerable<CtxMenu> CollectCommandMenus()
 		{
 			var atype = typeof(CommandAttribute);
 
