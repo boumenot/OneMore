@@ -455,6 +455,12 @@
                 getScreentip="GetRibbonScreentip"
                 onAction="CropImageCmd"/>
               <button
+                id="ribExtractTextImageButton"
+                imageMso="ExportTextFile"
+                getLabel="GetRibbonLabel"
+                getScreentip="GetRibbonScreentip"
+                onAction="ExtractTextCmd"/>
+              <button
                 id="ribOpenImageWithButton"
                 imageMso="PictureInsertFromFile"
                 getLabel="GetRibbonLabel"
@@ -1041,6 +1047,13 @@
         getLabel="GetRibbonLabel"
         getScreentip="GetRibbonScreentip"
         onAction="CropImageCmd"
+        insertBeforeMso="Cut"/>
+      <button
+        id="ctxExtractTextButton"
+        imageMso="ExportTextFile"
+        getLabel="GetRibbonLabel"
+        getScreentip="GetRibbonScreentip"
+        onAction="ExtractTextCmd"
         insertBeforeMso="Cut"/>
       <button
         id="ctxOpenImageWithButton"
