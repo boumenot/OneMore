@@ -2,7 +2,7 @@
 
 This is a fork of [stevencohn/OneMore](https://github.com/stevencohn/OneMore).  My changes add support for extracting text using [Azure AI Vision](https://azure.microsoft.com/en-us/products/ai-services/ai-vision), which has given **me** better results.  OneNote natively supports OCR, this is another way to extract text.
 
-I added the `Unwrap Text`, which is the opposite of word wrap.  Text that is extracted from images has lines sizes appropriate to the medium, but not to OneNote.  This removes the unnecessary line breaks, and lets OneNote decide how to flow text.
+I added the `Unwrap Text`, which is the opposite of word wrap.  Text that is extracted from images has lines sizes appropriate to the medium, but not to OneNote.  This removes the unnecessary line breaks, and lets OneNote decide how to flow text.  (And I just learned there is already existing and better functionality called `Join Paragraph`.)
 
 My changes are not user friendly.  If you want to try it you will need to:
 
