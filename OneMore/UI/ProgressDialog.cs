@@ -344,7 +344,7 @@ namespace River.OneMoreAddIn.UI
 
 		/// <summary>
 		/// Starts the second countdown timer, up to Maximum seconds.
-		/// If Maximum seconds ellapse then the dialog is closed and DialogResult is set to Abort.
+		/// If Maximum seconds elapsed the dialog is closed and DialogResult is set to Abort.
 		/// </summary>
 		public void StartTimer()
 		{
