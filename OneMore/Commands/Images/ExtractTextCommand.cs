@@ -10,7 +10,6 @@ namespace River.OneMoreAddIn.Commands
     using River.OneMoreAddIn.UI;
 
     using System;
-    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
@@ -111,7 +110,7 @@ namespace River.OneMoreAddIn.Commands
             var client = new ComputerVisionClient(
                 new ApiKeyServiceClientCredentials(subscriptionKey),
                 HttpClientFactory.CreateNew(),
-                disposeHttpClient: false)
+                disposeHttpClient: true)
             {
                 Endpoint = endpoint
             };
