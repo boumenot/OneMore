@@ -455,7 +455,7 @@
                 getScreentip="GetRibbonScreentip"
                 onAction="CropImageCmd"/>
               <button
-                id="ribExtractTextImageButton"
+                id="ribExtractTextButton"
                 imageMso="ExportTextFile"
                 getLabel="GetRibbonLabel"
                 getScreentip="GetRibbonScreentip"
