@@ -7,7 +7,6 @@ using System.Collections.Concurrent;
 namespace River.OneMoreAddIn.Commands
 {
     using River.OneMoreAddIn.Models;
-    using River.OneMoreAddIn.UI;
 
     using System;
     using System.IO;
@@ -63,44 +62,49 @@ namespace River.OneMoreAddIn.Commands
 
         private async Task OcrImages(XElement[] elements)
         {
-            var dict = new ConcurrentDictionary<int, string>();
+            var progress = new UI.ProgressDialog(async (self, token) =>
+            {
+                logger.Start();
+                logger.StartClock();
 
-            using var progress = new UI.ProgressDialog(2);
-            progress.Show();
-            progress.SetMessage("Extracting text from images...");
+                var imageOrImages = elements.Length == 1 ? "an image" : $"{elements.Length} images";
+                self.SetMessage($"Extracting text from {imageOrImages}.  The extracted text will be on the clipboard when complete.");
+                self.SetMaximum(elements.Length);
 
-            Parallel.ForEach(
-                elements.Select((x,i) => Tuple.Create(i, x)),
-                new ParallelOptions { MaxDegreeOfParallelism = 10 },
-                x =>
+                try
                 {
-                    var text = OcrImage(x.Item2).GetAwaiter().GetResult();
-                    dict.AddOrUpdate(x.Item1, text, (_, s) => s);
-                });
+                    var dict = new ConcurrentDictionary<int, string>();
+                    Parallel.ForEach(
+                        elements.Select((x, i) => Tuple.Create(i, x)),
+                        new ParallelOptions { MaxDegreeOfParallelism = 10, CancellationToken = token },
+                        x =>
+                        {
+                            var txt = OcrImage(x.Item2, token).ConfigureAwait(false).GetAwaiter().GetResult();
+                            self.Increment();
+                            dict.AddOrUpdate(x.Item1, txt, (_, s) => s);
+                        });
 
-            var text = string.Join("\n\n",
-                dict
-                    .OrderBy(x => x.Key)
-                    .Select(x => x.Value));
+                    var text = string.Join("\n\n",
+                        dict
+                            .OrderBy(x => x.Key)
+                            .Select(x => x.Value));
 
-            progress.Increment();
-            progress.SetMessage("Saving extracted text to the clipboard.");
-            this.SetClipboardText(text);
-            progress.Increment();
+                    await new ClipboardProvider().SetText(text);
+                }
+                finally
+                {
+                    self.Close();
+                }
+
+                logger.WriteTime($"extract text complete for {imageOrImages}");
+                logger.End();
+            });
+
+            await progress.RunModeless();
         }
 
 
-        private void SetClipboardText(string text)
-        {
-            var thread = new Thread(() => System.Windows.Clipboard.SetText(text));
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.IsBackground = false;
-            thread.Start();
-            thread.Join();
-        }
-
-
-        private async Task<string> OcrImage(XElement element)
+        private async Task<string> OcrImage(XElement element, CancellationToken token)
         {
             using var image = ReadImage(element);
 
@@ -120,14 +124,14 @@ namespace River.OneMoreAddIn.Commands
                 var data = Convert.FromBase64String(element.Element(ns + "Data")!.Value);
                 using var stream = new MemoryStream(data);
 
-                var result = await client.ReadInStreamAsync(stream).ConfigureAwait(false);
+                var result = await client.ReadInStreamAsync(stream, cancellationToken: token).ConfigureAwait(false);
 
                 var operationId = Guid.Parse(result.OperationLocation.Substring(result.OperationLocation.Length - 36));
 
                 ReadOperationResult ror;
                 do
                 {
-                    ror = await client.GetReadResultAsync(operationId).ConfigureAwait(false);
+                    ror = await client.GetReadResultAsync(operationId, cancellationToken: token).ConfigureAwait(false);
                     Thread.Sleep(TimeSpan.FromSeconds(1.5));
                 } while (ror.Status == OperationStatusCodes.Running || ror.Status == OperationStatusCodes.NotStarted);
 
