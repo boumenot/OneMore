@@ -15,11 +15,24 @@ namespace River.OneMoreAddIn
     /// </summary>
 	internal static class HttpClientFactory
 	{
-		private static HttpClient client;
+		private static readonly HttpClient client;
 
         static HttpClientFactory()
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
+            var handler = new HttpClientHandler()
+            {
+                AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
+            };
+
+            client = new HttpClient(handler);
+
+            // required headers otherwise some sites may not respond
+            client.DefaultRequestHeaders.Add("user-agent", "OneMore");
+            client.DefaultRequestHeaders.Add("accept", "text/html,application/xhtml+xml,application/xml,application/json");
+            client.DefaultRequestHeaders.Add("accept-encoding", "gzip, deflate");
+            client.DefaultRequestHeaders.Add("accept-language", "en-US;q=0.9");
         }
 
 
@@ -39,26 +52,7 @@ namespace River.OneMoreAddIn
 		/// </remarks>
 		public static HttpClient Create()
         {
-            return client ??= CreateNew();
-        }
-
-
-        public static HttpClient CreateNew()
-        {
-            var handler = new HttpClientHandler()
-            {
-                AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
-            };
-
-            var c = new HttpClient(handler);
-
-            // required headers otherwise some sites may not respond
-            c.DefaultRequestHeaders.Add("user-agent", "OneMore");
-            c.DefaultRequestHeaders.Add("accept", "text/html,application/xhtml+xml,application/xml,application/json");
-            c.DefaultRequestHeaders.Add("accept-encoding", "gzip, deflate");
-            c.DefaultRequestHeaders.Add("accept-language", "en-US;q=0.9");
-
-            return c;
+            return client;
         }
 
 

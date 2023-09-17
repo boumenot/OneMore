@@ -113,8 +113,8 @@ namespace River.OneMoreAddIn.Commands
 
             var client = new ComputerVisionClient(
                 new ApiKeyServiceClientCredentials(subscriptionKey),
-                HttpClientFactory.CreateNew(),
-                disposeHttpClient: true)
+                HttpClientFactory.Create(),
+                disposeHttpClient: false)
             {
                 Endpoint = endpoint
             };
