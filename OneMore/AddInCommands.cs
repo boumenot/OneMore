@@ -892,5 +892,10 @@ namespace River.OneMoreAddIn
 		[Command("ribExtractTextButton_Label", Keys.None, "ribImagesMenu")]
 		public async Task ExtractTextCmd(IRibbonControl control)
 			=> await factory.Run<ExtractTextCommand>();
-	}
+
+
+        [Command("ribUnwrapButton_Label", Keys.None, "ribCleanMenu")]
+        public async Task UnwrapCmd(IRibbonControl control)
+            => await factory.Run<UnwrapCommand>();
+    }
 }

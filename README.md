@@ -2,7 +2,9 @@
 
 This is a fork of [stevencohn/OneMore](https://github.com/stevencohn/OneMore).  My changes add support for extracting text using [Azure AI Vision](https://azure.microsoft.com/en-us/products/ai-services/ai-vision), which has given **me** better results.  OneNote natively supports OCR, this is another way to extract text.
 
-My change is not user friendly.  If you want to try it you will need:
+I added the `Unwrap Text`, which is the opposite of word wrap.  Text that is extracted from images has lines sizes appropriate to the medium, but not to OneNote.  This removes the unnecessary line breaks, and lets OneNote decide how to flow text.
+
+My changes are not user friendly.  If you want to try it you will need to:
 
 1. Build the code.
 1. Define and set the environment variable AZURE\_COGNITIVE\_SUBSCRIPTION\_KEY with your Azure AI key.
@@ -12,7 +14,9 @@ Execute the `Extract Text` command using the command palette.  Selected images w
 
 Up to ten images are processed at a time, and completion is polled every 1.5 seconds.  See the [pricing page](https://azure.microsoft.com/en-us/pricing/details/cognitive-services/computer-vision/) for details.
 
-The text extracted from images is returned in document order even though images are processed in paralle.
+The text extracted from images is returned in document order even though images are processed in parallel.  The extract text is place on the clipboard, paste it where ever you see fit.
+
+> NOTE: I do not understand this code base well, or GUI programming in general.  The code is probably broken in obvious ways (to some).
 
 ## FORK TODO
 

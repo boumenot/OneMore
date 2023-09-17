@@ -8780,7 +8780,16 @@ namespace River.OneMoreAddIn.Properties {
                 return ResourceManager.GetString("ribTrimLeadingButton_Screentip", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Unwrap the selected text.
+        /// </summary>
+        internal static string ribUnwrapButton_Label {
+            get {
+                return ResourceManager.GetString("ribUnwrapButton_Label", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Update Embedded Pages.
         /// </summary>

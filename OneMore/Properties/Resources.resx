@@ -3712,6 +3712,10 @@ Polaroid</value>
     <value>Trim leading whitespace from selected text</value>
     <comment>ribbon edit</comment>
   </data>
+  <data name="ribUnwrapButton_Label" xml:space="preserve">
+    <value>Unwrap the selected text</value>
+    <comment>ribbon images</comment>
+  </data>
   <data name="ribUpdateSubpageButton_Label" xml:space="preserve">
     <value>Update Embedded Pages</value>
     <comment>ribbon page</comment>
