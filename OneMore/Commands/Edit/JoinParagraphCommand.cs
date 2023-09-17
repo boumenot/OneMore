@@ -212,7 +212,7 @@ namespace River.OneMoreAddIn.Commands
 
 		private void Cleanup(Page page)
 		{
-			// must be removed in exactly this order - lower hierarhcy to upper hierarchy
+			// must be removed in exactly this order - lower hierarchy to upper hierarchy
 
 			page.Root.Descendants(ns + "Bullet").Where(e => !e.HasElements).Remove();
 			page.Root.Descendants(ns + "Number").Where(e => !e.HasElements).Remove();
