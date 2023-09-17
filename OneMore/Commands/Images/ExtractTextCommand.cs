@@ -145,8 +145,7 @@ namespace River.OneMoreAddIn.Commands
             catch (Exception e)
             {
                 this.logger.WriteVerbose(e.ToString());
-                return string.Empty;
-                // throw
+                throw;
             }
         }
 
