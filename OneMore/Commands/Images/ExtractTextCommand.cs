@@ -142,6 +142,10 @@ namespace River.OneMoreAddIn.Commands
 
                 return text;
             }
+            catch (TaskCanceledException e)
+            {
+                this.logger.WriteVerbose(e.ToString());
+            }
             catch (Exception e)
             {
                 this.logger.WriteVerbose(e.ToString());
